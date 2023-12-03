@@ -5,8 +5,6 @@ const inputArray = fs.readFileSync('./input.txt', { encoding: "utf-8" }) // read
   .toString('UTF8')
   .split('\n');
 
-const inputString = inputArray.toString();
-
 for (let i = 0; i < inputArray.length; i++){
   let element = inputArray[i].trim();
   let resultArray = [];
