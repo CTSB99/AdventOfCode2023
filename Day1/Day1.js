@@ -7,6 +7,19 @@ const inputArray = fs.readFileSync('./input.txt', { encoding: "utf-8" }) // read
 
 for (let i = 0; i < inputArray.length; i++){
   let element = inputArray[i].trim();
+
+  // Part Two
+  element = element
+  .replaceAll("one", "one1one")
+  .replaceAll("two", "two2two")
+  .replaceAll("three", "three3three")
+  .replaceAll("four", "four4four")
+  .replaceAll("five", "five5five")
+  .replaceAll("six", "six6six")
+  .replaceAll("seven", "seven7seven")
+  .replaceAll("eight", "eight8eight")
+  .replaceAll("nine", "nine9nine")
+
   let resultArray = [];
 
   for (let k = 0; k < element.length; k++){
