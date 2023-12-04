@@ -5,6 +5,7 @@ const inputArray = fs.readFileSync('./input.txt', { encoding: "utf-8" }) // read
   .split('\n');
 
 var result = 0;
+var resultPartTwo = 0;
 
 for (let i = 0; i < inputArray.length; i++){
   let nums = [];
@@ -24,9 +25,16 @@ for (let i = 0; i < inputArray.length; i++){
     result += nums[0];
     console.log(nums);
   }
+  
+  // Part Two
+  nums[0] = 1;
+  resultPartTwo += nums.reduce((a, b) => a*b, 1)
+  console.log("Result 2: " + resultPartTwo);
+  console.log(nums);
 }
 
 console.log(result);
+console.log(resultPartTwo);
 
 function getIndicesOf(searchStr, str) {
   var searchStrLen = searchStr.length;
