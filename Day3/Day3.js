@@ -46,6 +46,7 @@ console.log(finalResult);
 function isNeighbourSymbol(num, element){
     let i = 0;
     while (i < 2){
+      if(num[3] == 1) i = 1;
       console.log("i: " + i);
       console.log("num: " + num)
       let check = [];
