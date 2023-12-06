@@ -4,6 +4,9 @@ const inputArray = fs.readFileSync('./input.txt', { encoding: "utf-8" }) // read
   .toString('UTF8')
   .split('\n');
 
+
+let finalResult = [];
+
 for (let i = 0; i < inputArray.length; i++){
   let element = inputArray[i].trim();
   let result = [];
@@ -38,11 +41,14 @@ for (let i = 0; i < inputArray.length; i++){
   k = 0;
 }
 
+console.log(finalResult);
+
 function isNeighbourSymbol(num, element){
     let i = 0;
     while (i < 2){
       console.log("i: " + i);
       console.log("num: " + num)
+      let check = [];
       let numY = num[1];
       let numX = num[2]+(((num[3]-1)/2)*i*2);
 
@@ -70,6 +76,17 @@ function isNeighbourSymbol(num, element){
         console.log("N6: " + n6);
         console.log("N7: " + n7);
         console.log("N8: " + n8);
+
+        check.push(n1);
+        check.push(n2);
+        check.push(n3);
+        check.push(n4);
+        check.push(n5);
+        check.push(n6);
+        check.push(n7);
+        check.push(n8);
+
+        isSymbol(check, num[0]);
   
       }else if(numY == 0){
         if(numX == 0){
@@ -79,9 +96,10 @@ function isNeighbourSymbol(num, element){
           let n6 = inputArray[numY+1][numX+1];
           let n7 = inputArray[numY][numX+1];
 
-          isSymbol(n5);
-          isSymbol(n6);
-          isSymbol(n7);
+          check.push(n5);
+          check.push(n6);
+          check.push(n7);
+          isSymbol(check, num[0]);
 
         }else if(numX == element.length){
           console.log(`Neighbours2 of ${inputArray[numY][numX]} are: \n`);
@@ -90,9 +108,10 @@ function isNeighbourSymbol(num, element){
           let n4 = inputArray[numY+1][numX-1];
           let n5 = inputArray[numY+1][numX];
 
-          isSymbol(n3);
-          isSymbol(n4);
-          isSymbol(n5);
+          check.push(n3);
+          check.push(n4);
+          check.push(n5);
+          isSymbol(check, num[0]);
           
         }else{
           console.log(`Neighbours3 of ${inputArray[numY][numX]} are: \n`);
@@ -102,11 +121,12 @@ function isNeighbourSymbol(num, element){
           let n6 = inputArray[numY+1][numX+1];
           let n7 = inputArray[numY][numX+1];
 
-          isSymbol(n3);
-          isSymbol(n4);
-          isSymbol(n5);
-          isSymbol(n6);
-          isSymbol(n7);
+          check.push(n3);
+          check.push(n4);
+          check.push(n5);
+          check.push(n6);
+          check.push(n7);
+          isSymbol(check, num[0]);
         }
       }else{
         if(numX == element.length){
@@ -116,9 +136,11 @@ function isNeighbourSymbol(num, element){
           let n7 = inputArray[numY][numX+1];
           let n8 = inputArray[numY-1][numX+1];
 
-          isSymbol(n1);
-          isSymbol(n7);
-          isSymbol(n8);
+          check.push(n1);
+          check.push(n7);
+          check.push(n8);
+
+          isSymbol(check, num[0]);
 
         }else if(numY == inputArray.length){
           console.log(`Neighbours2 of ${inputArray[numY][numX]} are: \n`);
@@ -126,9 +148,10 @@ function isNeighbourSymbol(num, element){
           let n1 = inputArray[numY-1][numX];
           let n3 = inputArray[numY][numX-1];
 
-          isSymbol(n1);
-          isSymbol(n2);
-          isSymbol(n3);
+          check.push(n1);
+          check.push(n2);
+          check.push(n3);
+          isSymbol(check, num[0]);
           
         }else{
           console.log(`Neighbours3 of ${inputArray[numY][numX]} are: \n`);
@@ -138,21 +161,28 @@ function isNeighbourSymbol(num, element){
           let n1 = inputArray[numY-1][numX];
           let n8 = inputArray[numY-1][numX+1];
 
-          isSymbol(n3);
-          isSymbol(n7);
-          isSymbol(n2);
-          isSymbol(n1);
-          isSymbol(n8);
+          check.push(n3);
+          check.push(n7);
+          check.push(n2);
+          check.push(n1);
+          check.push(n8);
+          isSymbol(check, num[0]);
+          
         }
       }
       i++;
     }
   }
 
-function isSymbol(x){
+function isSymbol(x, num){
+  console.log("Is Symbol start. x: " + x);
+  console.log("Is Symbol start. num: " + num);
 
-  console.log(x);
-  console.log("Type " + typeof x);
+  console.log("Contains '*'? " + x.includes("*"));
+
+  if(x.includes("*")){
+    finalResult.push(num);
+  }
 }
 
 
@@ -161,3 +191,7 @@ Find Number
 Detect if valid
 Add numbers
 */
+
+// problems:
+// if first number checks -> break loop go to next number, else number might be saved multiple times
+// symbol check only includes "*"
