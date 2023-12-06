@@ -4,8 +4,8 @@ const inputArray = fs.readFileSync('./input.txt', { encoding: "utf-8" }) // read
   .toString('UTF8')
   .split('\n');
 
-
 let finalResult = [];
+let checkSymbol = ["*", "$", "%", "&", "=", "/", "@", "-", "#", "+"];
 
 for (let i = 0; i < inputArray.length; i++){
   let element = inputArray[i].trim();
@@ -35,142 +35,52 @@ for (let i = 0; i < inputArray.length; i++){
 
       console.log(element);
       console.log(isNeighbourSymbol(result, element));
-      console.log(result);
+      console.log("result: " + result);
       k++;
   }
   k = 0;
 }
 
 console.log(finalResult);
+console.log(finalResult.reduce((a,b)=> a+b),0);
 
 function isNeighbourSymbol(num, element){
     let i = 0;
     while (i < 2){
       if(num[3] == 1) i = 1;
-      console.log("i: " + i);
-      console.log("num: " + num)
+
       let check = [];
       let numY = num[1];
       let numX = num[2]+(((num[3]-1)/2)*i*2);
 
       console.log(numX, numY);
 
-      if(numY*numX != 0 && numY < element.length-1 && numX < inputArray.length-1){
-        console.log("Configuring Neighbours \n");
+      console.log("Configuring Neighbours \n");
 
-        let n1 = inputArray[numY-1][numX];
-        let n2 = inputArray[numY-1][numX-1];
-        let n3 = inputArray[numY][numX-1];
-        let n4 = inputArray[numY+1][numX-1];
-        let n5 = inputArray[numY+1][numX];
-        let n6 = inputArray[numY+1][numX+1];
-        let n7 = inputArray[numY][numX+1];
-        let n8 = inputArray[numY-1][numX+1];
+      let n1, n2, n3, n4, n5, n6, n7, n8;
 
-        console.log(`Neighbours of ${inputArray[numY][numX]} are: \n`);
+      try { n1 = inputArray[numY-1][numX]; } catch (error) { n1 = ""; }
+      try { n2 = inputArray[numY-1][numX-1]; } catch (error) { n2 = ""; }
+      try { n3 = inputArray[numY][numX-1]; } catch (error) { n3 = ""; }
+      try { n4 = inputArray[numY+1][numX-1]; } catch (error) { n4 = ""; }
+      try { n5 = inputArray[numY+1][numX]; } catch (error) { n5 = ""; }
+      try { n6 = inputArray[numY+1][numX+1]; } catch (error) { n6 = ""; }
+      try { n7 = inputArray[numY][numX+1]; } catch (error) { n7 = ""; }
+      try { n8 = inputArray[numY-1][numX+1]; } catch (error) { n8 = ""; }
 
-        console.log("N1: " + n1);
-        console.log("N2: " + n2);
-        console.log("N3: " + n3);
-        console.log("N4: " + n4);
-        console.log("N5: " + n5);
-        console.log("N6: " + n6);
-        console.log("N7: " + n7);
-        console.log("N8: " + n8);
+      console.log(`Neighbours of ${inputArray[numY][numX]} are: \n`);
 
-        check.push(n1);
-        check.push(n2);
-        check.push(n3);
-        check.push(n4);
-        check.push(n5);
-        check.push(n6);
-        check.push(n7);
-        check.push(n8);
+      check.push(n1);
+      check.push(n2);
+      check.push(n3);
+      check.push(n4);
+      check.push(n5);
+      check.push(n6);
+      check.push(n7);
+      check.push(n8);
 
-        isSymbol(check, num[0]);
-  
-      }else if(numY == 0){
-        if(numX == 0){
-          console.log(`Neighbours1 of ${inputArray[numY][numX]} are: \n`);
+      if(isSymbol(check, num[0]) == true) {break;}
 
-          let n5 = inputArray[numY+1][numX];
-          let n6 = inputArray[numY+1][numX+1];
-          let n7 = inputArray[numY][numX+1];
-
-          check.push(n5);
-          check.push(n6);
-          check.push(n7);
-          isSymbol(check, num[0]);
-
-        }else if(numX == element.length){
-          console.log(`Neighbours2 of ${inputArray[numY][numX]} are: \n`);
-
-          let n3 = inputArray[numY][numX-1];
-          let n4 = inputArray[numY+1][numX-1];
-          let n5 = inputArray[numY+1][numX];
-
-          check.push(n3);
-          check.push(n4);
-          check.push(n5);
-          isSymbol(check, num[0]);
-          
-        }else{
-          console.log(`Neighbours3 of ${inputArray[numY][numX]} are: \n`);
-          let n3 = inputArray[numY][numX-1];
-          let n4 = inputArray[numY+1][numX-1];
-          let n5 = inputArray[numY+1][numX];
-          let n6 = inputArray[numY+1][numX+1];
-          let n7 = inputArray[numY][numX+1];
-
-          check.push(n3);
-          check.push(n4);
-          check.push(n5);
-          check.push(n6);
-          check.push(n7);
-          isSymbol(check, num[0]);
-        }
-      }else{
-        if(numX == element.length){
-          console.log(`Neighbours1 of ${inputArray[numY][numX]} are: \n`);
-
-          let n1 = inputArray[numY-1][numX];
-          let n7 = inputArray[numY][numX+1];
-          let n8 = inputArray[numY-1][numX+1];
-
-          check.push(n1);
-          check.push(n7);
-          check.push(n8);
-
-          isSymbol(check, num[0]);
-
-        }else if(numY == inputArray.length){
-          console.log(`Neighbours2 of ${inputArray[numY][numX]} are: \n`);
-
-          let n1 = inputArray[numY-1][numX];
-          let n3 = inputArray[numY][numX-1];
-
-          check.push(n1);
-          check.push(n2);
-          check.push(n3);
-          isSymbol(check, num[0]);
-          
-        }else{
-          console.log(`Neighbours3 of ${inputArray[numY][numX]} are: \n`);
-          let n3 = inputArray[numY][numX-1];
-          let n7 = inputArray[numY][numX+1];
-          let n2 = inputArray[numY-1][numX-1];
-          let n1 = inputArray[numY-1][numX];
-          let n8 = inputArray[numY-1][numX+1];
-
-          check.push(n3);
-          check.push(n7);
-          check.push(n2);
-          check.push(n1);
-          check.push(n8);
-          isSymbol(check, num[0]);
-          
-        }
-      }
       i++;
     }
   }
@@ -181,11 +91,12 @@ function isSymbol(x, num){
 
   console.log("Contains '*'? " + x.includes("*"));
 
-  if(x.includes("*")){
-    finalResult.push(num);
+  if(x.some(r=> checkSymbol.includes(r))
+  ){
+    finalResult.push(parseInt(num));
+    return true;
   }
 }
-
 
 /*
 Find Number
